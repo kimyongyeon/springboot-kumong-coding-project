@@ -1,4 +1,4 @@
-package kyy.springbootkumongcodingproject.entity.guestbook;
+package kyy.springbootkumongcodingproject.entity;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;

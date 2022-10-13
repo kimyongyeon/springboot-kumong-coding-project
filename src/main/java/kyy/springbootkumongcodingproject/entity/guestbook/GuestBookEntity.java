@@ -1,5 +1,6 @@
 package kyy.springbootkumongcodingproject.entity.guestbook;
 
+import kyy.springbootkumongcodingproject.entity.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
