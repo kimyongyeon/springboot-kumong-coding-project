@@ -2,6 +2,7 @@ package kyy.springbootkumongcodingproject.controller.guestbook;
 
 import kyy.springbootkumongcodingproject.dto.guestbook.GuestBookDTO;
 import kyy.springbootkumongcodingproject.service.guestbook.GuestBookService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,14 +11,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/guestbook/rest")
 @CrossOrigin("*")
+@RequiredArgsConstructor
 public class GuestBookRestController {
 
     final
     GuestBookService guestBookService;
-
-    public GuestBookRestController(GuestBookService guestBookService) {
-        this.guestBookService = guestBookService;
-    }
 
     @GetMapping(value = {"/", "/list"})
     public List<GuestBookDTO> list() {
