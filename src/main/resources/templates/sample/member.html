@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Member</title>
+</head>
+<body>
+    <h1>for member.....</h1>
+<div sec:authorize="hasRole('USER')">Has User Role</div>
+<div sec:authorize="hasRole('MANAGER')">Has Manager Role</div>
+<div sec:authorize="hasRole('ADMIN')">Has Admin Role</div>
+
+<div sec:authorize="isAuthenticated()">
+    only Authenticated user can seee this text
+</div>
+
+Authenticated username: <div sec:authentication="name"></div>
+Authenticated user roles: <div sec:authentication="principal.authorities"></div>
+</body>
+</html>

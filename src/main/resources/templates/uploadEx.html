@@ -43,7 +43,7 @@
         let divArea = document.querySelector(".uploadResult");
 
         for (let i = 0; i < arr.length; i++) {
-            divArea.append("<img src='/display?fileName='" +arr[i].imageURL + "'>");
+            divArea.insertAdjacentHTML("beforeend", `<img src=/display?fileName=${arr[i].imageUrl}>`);
         }
     }
 </script>

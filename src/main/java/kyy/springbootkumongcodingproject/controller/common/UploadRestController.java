@@ -67,7 +67,7 @@ public class UploadRestController {
             Path savePath = Paths.get(saveName);
             try {
                 uploadFile.transferTo(savePath);
-                resultDTOList.add(new UploadResultDTO(fileName, uuid, folderPath, ""));
+                resultDTOList.add(new UploadResultDTO(fileName, uuid, folderPath));
             } catch (IOException e) {
                 e.printStackTrace();
             }
