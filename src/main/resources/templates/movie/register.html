@@ -1,58 +1,18 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:layout="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Movie Register</title>
-    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
-            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
-    <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-
-    <!-- JavaScript Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
-            crossorigin="anonymous"></script>
-
-    <script src="http://localhost:8080/register.js"></script>
-    <style>
-        .uploadResult {
-            width: 100%;
-            background-color: gray;
-            margin-top: 10px;
-        }
-
-        .uploadResult ul {
-            display: flex;
-            flex-flow: row;
-            justify-content: center;
-            align-items: center;
-            vertical-align: top;
-            overflow: auto;
-        }
-
-        .uploadResult ul li {
-            list-style: none;
-            padding: 10px;
-            margin-left: 2em;
-        }
-
-        .uploadResult ul li img {
-            width: 100px;
-        }
-    </style>
+    <title layout:title-pattern="$LAYOUT_TITLE : $CONTENT_TITLE">Eblo</title>
+    <!-- 공통 css, js, meta tag -->
+    <th:block th:replace="fragments/commonHead"></th:block>
 </head>
 <body>
 <div class="container">
     <h1>Movie Register</h1>
 
-    <form action="/movie/register">
+    <form action="/movie/register" method="post">
         <div class="mb-3">
             <label for="title" class="form-label">Title</label>
-            <input type="text" class="form-control" id="title" placeholder="Enter Title">
+            <input type="text" class="form-control" name="title" id="title" placeholder="Enter Title">
         </div>
         <div class="mb-3">
             <label for="movieFile" class="form-label">Image Files</label>
@@ -60,8 +20,11 @@
         </div>
 
         <div class="mb-3">
-            <button type="button" class="btn btn-primary">Primary</button>
+            <button type="submit" class="btn btn-primary">등록</button>
         </div>
+
+        <div class="box"></div>
+
     </form>
 
     <div class="uploadResult">
@@ -75,6 +38,10 @@
         </div>
     </div>
 
+
+
+    <button class="btn btn-primary custom-event">커스텀 이벤트</button>
+
 </div>
 
 <script>
@@ -82,7 +49,7 @@
     const reg = new Register({alert: ".alert",
         fileInput: ".custom-file-input",
         uploadResult: ".uploadResult",
-        submit: "btn-primary"});
+        submit: ".btn-primary"});
 
     // setTimeout(function() {
     //     $(".alert").addClass('d-none');

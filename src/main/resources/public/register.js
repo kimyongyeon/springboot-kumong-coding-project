@@ -116,15 +116,28 @@ class Register {
     }
 
     eventOn() {
-        $(this.fileInput).on("change", this.onChangeFileUpload);
-        $(this.uploadResult).on("click", this.onClickUploadResult);
-        $(this.submit).on("click", this.onClickSubmit);
+        $(this.fileInput).on("change", $.proxy(this.onChangeFileUpload, this));
+        $(this.uploadResult).on("click", $.proxy(this.onClickUploadResult, this));
+        $(this.submit).on("click", $.proxy(this.onClickSubmit, this));
+
+        $(".custom-event").on("click", function() {
+            $(".custom-event").trigger("viewRender", {name: 'hello'});
+        });
+
+        $(".custom-event").on("viewRender", function(e, data) {
+            alert(data.name);
+        })
+
+        $(this.fileInput).on("viewRender", function(e, data) {
+            alert('fileInput hello ' + data.name);
+        })
     }
 
     onChangeFileUpload(e) {
         let inputFile = $("input[name='uploadFiles']");
-        let files = inputFile.files;
-        this.newImagePreview(files);
+        let files = inputFile[0].files;
+        this.oldImagePreview(files);
+        // $(this).trigger("viewRender", {name: 'fire'});
     }
     onClickUploadResult(e) {
         console.log("delete file");
@@ -143,7 +156,7 @@ class Register {
         })
     }
     onClickSubmit(e) {
-        e.preventDefault();
+        // e.preventDefault();
         let str = "";
         $(".uploadResult li").each(function(i, obj) {
             let target = $(obj);
@@ -155,7 +168,7 @@ class Register {
         });
         // 태그들이 추가된 것을 확인 후에 comment를 제거
         $(".box").html(str);
-        // $("form").submit();
+        $("form").submit();
     }
 
 }

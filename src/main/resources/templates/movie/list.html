@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en" xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+    <title layout:title-pattern="$LAYOUT_TITLE : $CONTENT_TITLE">Eblo</title>
+    <!-- 공통 css, js, meta tag -->
+    <th:block th:replace="fragments/commonHead"></th:block>
+</head>
+<body>
+<div class="container">
+    <h1>movie list</h1>
+    <ul class="list"></ul>
+</div>
+<script>
+    $(function () {
+        list();
+    });
+
+    function list() {
+        console.log("list called");
+        $.ajax({
+            url: "/movie/rest/list",
+            data: {},
+            dataType: "text",
+            type: "GET",
+            success: (result) => {
+                console.log(typeof result);
+                const jsonResult = JSON.parse(result);
+                jsonResult.dtoList.map(item => {
+                    $(".list").append(
+                        `
+                                <li>
+                                    mno : ${item.mno}
+                                    title : ${item.title}
+                                    avg : ${item.avg}
+                                    reviewcnt : ${item.reviewCnt}
+                                    regDate : ${item.regDate}
+                                </li>
+                            `
+                    )
+                })
+            },
+        })
+    }
+</script>
+</body>
+</html>

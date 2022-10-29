@@ -15,7 +15,6 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class IndexController {
 
-    private final MovieUseCase movieUseCase;
 
     @GetMapping("/")
     public void index(@AuthenticationPrincipal ClubAuthMemberDTO memberDTO, HttpServletResponse response) throws IOException {
@@ -27,8 +26,6 @@ public class IndexController {
 
     @GetMapping("/index")
     public String helloIndex() {
-        movieUseCase.list();
-        movieUseCase.view();
         return "index";
     }
 }
