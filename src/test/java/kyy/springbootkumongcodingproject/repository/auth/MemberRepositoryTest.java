@@ -16,10 +16,12 @@ class MemberRepositoryTest {
     public void insertMembers() {
         IntStream.rangeClosed(1, 100).forEach(i -> {
             Member member = Member.builder()
-                    .email("r" + i + "@zerock.org")
+                    .email("user" + i + "@aaa.com")
                     .pw("1111")
                     .nickName("reviewr " + i).build();
             memberRepository.save(member);
         });
     }
+
+
 }

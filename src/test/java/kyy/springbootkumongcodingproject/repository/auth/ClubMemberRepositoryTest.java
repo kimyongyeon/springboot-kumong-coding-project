@@ -26,7 +26,7 @@ class ClubMemberRepositoryTest {
 
         IntStream.rangeClosed(1, 100).forEach(i -> {
             ClubMember clubMember = ClubMember.builder()
-                    .email("user" + i + "@zerock.org")
+                    .email("user" + i + "@aaa.com")
                     .name("사용자" + i)
                     .fromSocial(false)
                     .password(passwordEncoder.encode("1111"))
