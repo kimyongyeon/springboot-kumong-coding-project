@@ -47,8 +47,8 @@ class ReviewRepositoryTest {
 //        reviewRepository.deleteByMember(member);
 
         // 순서 주의
-        reviewRepository.deleteByMember(member);
-        memberRepository.deleteById(mid);
+//        reviewRepository.deleteByMember(member);
+//        memberRepository.deleteById(mid);
     }
 
 

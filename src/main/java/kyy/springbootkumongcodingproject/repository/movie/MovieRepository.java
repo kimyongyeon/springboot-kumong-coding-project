@@ -1,6 +1,7 @@
 package kyy.springbootkumongcodingproject.repository.movie;
 
 import kyy.springbootkumongcodingproject.entity.movie.Movie;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -8,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+
 
 public interface MovieRepository extends JpaRepository<Movie, Long> {
     @Query("select m, mi, avg(coalesce(r.grade, 0)), count(r) from Movie m " +
