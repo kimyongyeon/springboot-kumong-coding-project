@@ -69,6 +69,48 @@ public class SearchBoardRepositoryImpl extends QuerydslRepositorySupport impleme
         return null;
     }
 
+    public Page<Object[]> booleanBuilder(String type, String keyword, Pageable pageable) {
+        QBoard board = QBoard.board;
+        QReply reply = QReply.reply;
+        QCustom member = QCustom.custom;
+
+        JPQLQuery<Tuple> tuple = from(board)
+                .leftJoin(member).on(board.writer.eq(member))
+                .leftJoin(reply).on(reply.board.eq(board))
+                .select(board, member, reply.count());
+
+        BooleanBuilder booleanBuilder = new BooleanBuilder();
+        BooleanExpression booleanExpression = board.bno.gt(0L);
+
+        booleanBuilder.and(booleanExpression);
+
+        if (type != null) {
+            String[] typeArr = type.split("");
+            BooleanBuilder conditionBuilder = new BooleanBuilder();
+            for (String t : typeArr) {
+                switch (t) {
+                    case "t":
+                        conditionBuilder.or(board.title.contains(keyword));
+                        break;
+                    case "w":
+                        conditionBuilder.or(member.email.contains(keyword));
+                        break;
+                    case "c":
+                        conditionBuilder.or(board.content.contains(keyword));
+                        break;
+                }
+            }
+            booleanBuilder.and(conditionBuilder);
+        }
+
+        tuple.where(booleanBuilder);
+        tuple.groupBy(board);
+        List<Tuple> fetch = tuple.fetch();
+        System.out.println(fetch);
+
+        return null;
+    }
+
     @Override
     public Page<Object[]> searchPage(String type, String keyword, Pageable pageable) {
         QBoard board = QBoard.board;
@@ -78,34 +120,10 @@ public class SearchBoardRepositoryImpl extends QuerydslRepositorySupport impleme
         JPQLQuery<Tuple> tuple = from(board)
                 .leftJoin(member).on(board.writer.eq(member))
                 .leftJoin(reply).on(reply.board.eq(board))
-                .select(board, member, reply.count());
-
-//        BooleanBuilder booleanBuilder = new BooleanBuilder();
-//        BooleanExpression booleanExpression = board.bno.gt(0L);
-//        booleanBuilder.and(booleanExpression);
-//        if (type != null) {
-//            String[] typeArr = type.split("");
-//            BooleanBuilder conditionBuilder = new BooleanBuilder();
-//            for (String t : typeArr) {
-//                switch (t) {
-//                    case "t":
-//                        conditionBuilder.or(titleContains(keyword));
-//                        break;
-//                    case "w":
-//                        conditionBuilder.or(emailContains(keyword));
-//                        break;
-//                    case "c":
-//                        conditionBuilder.or(contentContains(keyword));
-//                        break;
-//                }
-//            }
-//            booleanBuilder.and(conditionBuilder);
-//        }
-//        tuple.where(booleanBuilder);
-        tuple.where(bnoGt(0L).or(allOr(type, keyword)));
-        tuple.groupBy(board);
+                .select(board, member, reply.count())
+                .where(bnoGt(0L).or(searchOr(type, keyword)))
+                .groupBy(board);
         Sort sort = pageable.getSort();
-//        tuple.orderBy(board.bno.desc()); // 직접 코드로 처리 하면.
         sort.stream().forEach(order -> {
             Order direction = order.isAscending() ? Order.ASC : Order.DESC;
             String prop = order.getProperty();
@@ -140,7 +158,7 @@ public class SearchBoardRepositoryImpl extends QuerydslRepositorySupport impleme
         return board.content != null ? board.content.contains(contentCond) : null;
     }
 
-    private BooleanBuilder allOr(String type, String keyword) {
+    private BooleanBuilder searchOr(String type, String keyword) {
         BooleanBuilder conditionBuilder = new BooleanBuilder();
         if (type != null) {
             String[] typeArr = type.split("");
