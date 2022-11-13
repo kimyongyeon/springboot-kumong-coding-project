@@ -1,0 +1,68 @@
+spring:
+  config:
+    activate:
+      on-profile: loc
+logging:
+  pattern:
+    console: "%-5level %d{yyyy-MM-dd HH:mm:ss}[%thread] %logger[%method:%line] - %msg%n"
+  level:
+    root: info
+    kyy.springbootkumongcodingproject: debug
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+logging:
+  pattern:
+    console: "%-5level %d{yyyy-MM-dd HH:mm:ss}[%thread] %logger[%method:%line] - %msg%n"
+    file: "%-4relative [%thread] %-5level %logger{35} - %msg%n"
+  logback:
+    rolling policy:
+      file-name-pattern: "${LOG_FILE}.%d{yyyy-MM-dd}_%i.zip"
+      max-history: 7
+      max-file-size: 5KB
+      total-size-cap: 1MB
+  file:
+    name: logs-dev
+  level:
+    root: info
+    kyy.springbootkumongcodingproject: debug
+
+---
+spring:
+  config:
+    activate:
+      on-profile: stg
+logging:
+  pattern:
+    file: "%-4relative [%thread] %-5level %logger{35} - %msg%n"
+  logback:
+    rolling policy:
+      file-name-pattern: "${LOG_FILE}.%d{yyyy-MM-dd}_%i.zip"
+      max-history: 7
+      max-file-size: 5KB
+      total-size-cap: 1MB
+  file:
+    name: logs-stg
+  level:
+    root: error
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+logging:
+  pattern:
+    file: "%-4relative [%thread] %-5level %logger{35} - %msg%n"
+  logback:
+    rolling policy:
+      file-name-pattern: "${LOG_FILE}.%d{yyyy-MM-dd}_%i.zip"
+      max-history: 7
+      max-file-size: 5KB
+      total-size-cap: 1MB
+  file:
+    name: logs-prod
+  level:
+    root: error

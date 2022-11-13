@@ -11,6 +11,7 @@ import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import kyy.springbootkumongcodingproject.entity.auth.QCustom;
+import kyy.springbootkumongcodingproject.entity.auth.QMember;
 import kyy.springbootkumongcodingproject.entity.board.Board;
 import kyy.springbootkumongcodingproject.entity.board.QBoard;
 import kyy.springbootkumongcodingproject.entity.board.QReply;
@@ -113,15 +114,11 @@ public class SearchBoardRepositoryImpl extends QuerydslRepositorySupport impleme
 
     @Override
     public Page<Object[]> searchPage(String type, String keyword, Pageable pageable) {
-        QBoard board = QBoard.board;
-        QReply reply = QReply.reply;
-        QCustom member = custom;
-
         JPQLQuery<Tuple> tuple = from(board)
-                .leftJoin(member).on(board.writer.eq(member))
+                .leftJoin(member).on(board.writer.eq(custom))
                 .leftJoin(reply).on(reply.board.eq(board))
                 .select(board, member, reply.count())
-                .where(bnoGt(0L).or(searchOr(type, keyword)))
+                .where(bnoGt(0L).or(searchOr(type, keyword)), usernameEq("title"))
                 .groupBy(board);
         Sort sort = pageable.getSort();
         sort.stream().forEach(order -> {

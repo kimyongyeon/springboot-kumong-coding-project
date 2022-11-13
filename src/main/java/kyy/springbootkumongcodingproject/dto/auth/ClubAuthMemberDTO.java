@@ -8,6 +8,9 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Collection;
 
 @Log4j2
@@ -15,6 +18,7 @@ import java.util.Collection;
 @Setter
 @ToString
 public class ClubAuthMemberDTO extends User {
+
 
     private String email;
     private String name;

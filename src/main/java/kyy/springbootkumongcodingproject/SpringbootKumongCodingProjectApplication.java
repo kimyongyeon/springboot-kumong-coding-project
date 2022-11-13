@@ -1,21 +1,19 @@
 package kyy.springbootkumongcodingproject;
 
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.ApplicationContextFactory;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
-import org.springframework.web.bind.annotation.CrossOrigin;
-
-import java.util.Map;
 
 
 @SpringBootApplication
 @EnableJpaAuditing // AuditionEntityListner 활성화를 위해 추가
+@Log4j2
 public class SpringbootKumongCodingProjectApplication implements ApplicationRunner {
 
     @Autowired
@@ -34,6 +32,12 @@ public class SpringbootKumongCodingProjectApplication implements ApplicationRunn
         System.out.println("env ====> " + env);
         System.out.println("SPRING_PROFILES_ACTIVE :: " + environment.getProperty("SPRING_PROFILES_ACTIVE"));
         System.out.println("system env ::: " + System.getenv("SPRING_PROFILES_ACTIVE"));
+
+        log.info("info log....");
+        log.error("error log....");
+        log.warn("warn log....");
+        log.debug("debug log....");
+        
 
         //시스템 환경변수 값 전체 가져오기 (key, value 형태)
 //        Map<String, String> map = System.getenv();

@@ -35,6 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // https://github.com/HomoEfficio/dev-tips/blob/master/Spring%20Security%EC%99%80%20h2-console%20%ED%95%A8%EA%BB%98%20%EC%93%B0%EA%B8%B0.md
         http.authorizeRequests()
                 .antMatchers("/sample/all").permitAll()
+                .antMatchers("/hello").permitAll()
                 .antMatchers("/sample/member").hasRole("USER")
                 .antMatchers("/sample/admin").hasRole("ADMIN")
 //                .antMatchers("/h2-console/**").permitAll()  // h2-console + security

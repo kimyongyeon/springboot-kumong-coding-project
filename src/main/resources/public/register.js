@@ -136,7 +136,7 @@ class Register {
     onChangeFileUpload(e) {
         let inputFile = $("input[name='uploadFiles']");
         let files = inputFile[0].files;
-        this.oldImagePreview(files);
+        this.newImagePreview(files);
         // $(this).trigger("viewRender", {name: 'fire'});
     }
     onClickUploadResult(e) {
